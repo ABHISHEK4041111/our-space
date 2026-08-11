@@ -2,12 +2,17 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>ABHISHEK 💗 AYUSHI</title>
 
-<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet"
+href="/static/style.css">
+
 </head>
 
 <body>
@@ -18,16 +23,24 @@
 
 <h1>ABHISHEK 💗 AYUSHI</h1>
 
-
 <section class="love-card">
-<p class="label">FIRST EYE CONTACT</p>
-<h2>21 DECEMBER 2025</h2>
+
+<p class="label">
+FIRST EYE CONTACT
+</p>
+
+<h2>
+21 DECEMBER 2025
+</h2>
+
 </section>
 
 
 <section class="love-card">
 
-<p class="label">AI 💗</p>
+<p class="label">
+AI 💗
+</p>
 
 <h2>
 MAM MASTER LOVES YOU MORE THAN ITSELF 💗👾
@@ -47,9 +60,13 @@ I LOVE YOU MERA BACCHA PYARA SA ❤️
 
 <section class="love-card notes">
 
-<p class="label">NOTES 📝</p>
+<p class="label">
+NOTES 📝
+</p>
 
-<p>Nickname according to Ayushi Mam:</p>
+<p>
+Nickname according to Ayushi Mam:
+</p>
 
 <h2>DUGUMUGU ❤️ 🤦</h2>
 
@@ -58,13 +75,17 @@ I LOVE YOU MERA BACCHA PYARA SA ❤️
 </section>
 
 
-<!-- RANDOM MEMORIES -->
+<!-- MEMORIES -->
 
 <section class="memories">
 
-<h2>OUR MEMORIES ❤️</h2>
+<h2>
+OUR MEMORIES ❤️
+</h2>
 
 <div class="memory-grid">
+
+{% if memories %}
 
 {% for photo in memories %}
 
@@ -78,6 +99,14 @@ alt="Our Memory">
 
 {% endfor %}
 
+{% else %}
+
+<div class="no-memory">
+Add some photos to Our Gallery ❤️
+</div>
+
+{% endif %}
+
 </div>
 
 </section>
@@ -87,7 +116,9 @@ alt="Our Memory">
 
 <section class="love-card">
 
-<h3>TOGETHER FOR ❤️</h3>
+<h3>
+TOGETHER FOR ❤️
+</h3>
 
 <div class="time">
 
@@ -116,11 +147,13 @@ alt="Our Memory">
 </section>
 
 
-<!-- LIVE MOOD -->
+<!-- ONLINE MOOD -->
 
 <section class="love-card">
 
-<h3>HOW ARE YOU FEELING? 💗</h3>
+<h3>
+HOW ARE YOU FEELING? 💗
+</h3>
 
 <form action="/mood" method="POST">
 
@@ -146,6 +179,14 @@ alt="Our Memory">
 
 </form>
 
+
+<div class="online-status">
+
+🟢 ONLINE MOOD SYNC
+
+</div>
+
+
 <div class="current-mood">
 
 Current mood:
@@ -154,80 +195,289 @@ Current mood:
 {{ mood }}
 </strong>
 
+<small id="moodTime">
+{{ mood_time }}
+</small>
+
 </div>
 
 </section>
 
 
-<a href="/gallery" class="gallery-btn">
+<!-- MOOD HISTORY -->
+
+<section class="love-card">
+
+<h3>
+MOOD HISTORY 🕐
+</h3>
+
+<div id="history">
+
+Loading...
+
+</div>
+
+</section>
+
+
+<a
+href="/gallery"
+class="gallery-btn">
+
 🖼️ OUR GALLERY
+
 </a>
 
 </main>
 
 
+<!-- LIVE ALERT -->
+
+<div id="liveAlert"
+class="live-alert">
+
+<span id="alertText">
+</span>
+
+</div>
+
+
 <script>
 
-/* LIVE COUNTER */
+/* =========================
+   LIVE COUNTER
+========================= */
 
 const firstMeet =
-new Date("December 21, 2025 00:00:00").getTime();
+new Date(
+"December 21, 2025 00:00:00"
+).getTime();
 
 
 function updateCounter() {
 
+const now =
+new Date().getTime();
+
 const difference =
-new Date().getTime() - firstMeet;
+now - firstMeet;
 
 document.getElementById("days").innerText =
-Math.floor(difference / 86400000);
+Math.floor(
+difference / 86400000
+);
 
 document.getElementById("hours").innerText =
-Math.floor((difference / 3600000) % 24);
+Math.floor(
+(difference / 3600000) % 24
+);
 
 document.getElementById("minutes").innerText =
-Math.floor((difference / 60000) % 60);
+Math.floor(
+(difference / 60000) % 60
+);
 
 document.getElementById("seconds").innerText =
-Math.floor((difference / 1000) % 60);
+Math.floor(
+(difference / 1000) % 60
+);
 
 }
 
 updateCounter();
 
-setInterval(updateCounter, 1000);
+setInterval(
+updateCounter,
+1000
+);
 
 
-/* LIVE MOOD */
+/* =========================
+   LIVE MOOD
+========================= */
 
-async function updateMood() {
+let lastMood = "{{ mood }}";
+
+
+async function checkMood() {
 
 try {
 
 const response =
-await fetch("/current-mood");
+await fetch(
+"/api/mood?time=" +
+Date.now()
+);
 
 const data =
 await response.json();
 
+
+if (
+data.mood !== lastMood
+) {
+
+showAlert(
+"💗 New mood: " +
+data.mood
+);
+
+lastMood =
+data.mood;
+
+}
+
+
 document.getElementById(
 "currentMood"
-).innerText = data.mood;
+).innerText =
+data.mood;
+
+
+if (data.updated_at) {
+
+const date =
+new Date(data.updated_at);
+
+document.getElementById(
+"moodTime"
+).innerText =
+date.toLocaleString();
+
+}
 
 }
 
 catch(error) {
 
-console.log("Mood update error");
+console.log(
+"Connection checking..."
+);
 
 }
 
 }
 
 
-/* Check every 1 second */
+/* Check every 2 seconds */
 
-setInterval(updateMood, 1000);
+setInterval(
+checkMood,
+2000
+);
+
+
+/* =========================
+   MOOD HISTORY
+========================= */
+
+async function loadHistory() {
+
+try {
+
+const response =
+await fetch(
+"/api/history?time=" +
+Date.now()
+);
+
+const data =
+await response.json();
+
+const history =
+document.getElementById(
+"history"
+);
+
+if (!data.length) {
+
+history.innerHTML =
+"No mood history yet ❤️";
+
+return;
+
+}
+
+
+history.innerHTML = "";
+
+
+data.forEach(item => {
+
+const div =
+document.createElement(
+"div"
+);
+
+div.className =
+"history-item";
+
+const date =
+new Date(item.time);
+
+div.innerHTML =
+"<strong>" +
+item.mood +
+"</strong>" +
+"<small>" +
+date.toLocaleString() +
+"</small>";
+
+history.appendChild(div);
+
+});
+
+}
+
+catch(error) {
+
+console.log(
+"History unavailable"
+);
+
+}
+
+}
+
+
+loadHistory();
+
+setInterval(
+loadHistory,
+5000
+);
+
+
+/* =========================
+   ALERT
+========================= */
+
+function showAlert(message) {
+
+const alert =
+document.getElementById(
+"liveAlert"
+);
+
+document.getElementById(
+"alertText"
+).innerText =
+message;
+
+alert.classList.add(
+"show"
+);
+
+setTimeout(() => {
+
+alert.classList.remove(
+"show"
+);
+
+}, 3500);
+
+}
 
 </script>
 
