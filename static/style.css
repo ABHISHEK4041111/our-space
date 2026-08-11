@@ -1,0 +1,422 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    color: white;
+
+    background-image:
+        linear-gradient(
+            rgba(0,0,0,0.45),
+            rgba(0,0,0,0.60)
+        ),
+        url("/static/images/background.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+.home {
+    min-height: 100vh;
+
+    padding: 45px 18px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+}
+
+
+.heart {
+    font-size: 55px;
+
+    animation: beat 1.2s infinite;
+}
+
+
+@keyframes beat {
+
+    50% {
+        transform: scale(1.15);
+    }
+
+}
+
+
+h1 {
+    font-size: 30px;
+
+    margin: 15px 0 25px;
+
+    text-shadow:
+        0 3px 12px black;
+}
+
+
+.love-card,
+.memories {
+
+    width: 100%;
+    max-width: 520px;
+
+    margin: 9px 0;
+
+    padding: 23px;
+
+    border-radius: 25px;
+
+    background:
+        rgba(0,0,0,0.45);
+
+    backdrop-filter:
+        blur(10px);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.18);
+}
+
+
+.label {
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    opacity: 0.7;
+}
+
+
+.love-card h2 {
+
+    margin: 12px 0 0;
+
+    font-size: 20px;
+
+    line-height: 1.4;
+}
+
+
+/* FOUR MEMORY BOXES */
+
+.memories h2 {
+
+    font-size: 21px;
+
+    margin-top: 0;
+
+    margin-bottom: 18px;
+}
+
+
+.memory-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 10px;
+}
+
+
+.memory {
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,0.08);
+}
+
+
+.memory img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+.no-memory {
+
+    grid-column: 1 / -1;
+
+    padding: 30px 10px;
+
+    opacity: 0.7;
+}
+
+
+/* COUNTER */
+
+.time {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 8px;
+
+    margin-top: 18px;
+}
+
+
+.time div {
+
+    padding: 13px 5px;
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,0.10);
+}
+
+
+.time strong {
+
+    display: block;
+
+    font-size: 23px;
+}
+
+
+.time span {
+
+    font-size: 9px;
+
+    opacity: 0.7;
+}
+
+
+/* MOOD BUTTONS */
+
+.love-card button {
+
+    width: 100%;
+
+    padding: 13px;
+
+    margin: 5px 0;
+
+    border: none;
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,0.12);
+
+    color: white;
+
+    font-size: 15px;
+}
+
+
+.love-card button:active {
+
+    transform: scale(0.97);
+}
+
+
+.current-mood {
+
+    margin-top: 15px;
+
+    padding: 12px;
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    font-size: 13px;
+}
+
+
+.current-mood strong {
+
+    display: block;
+
+    margin-top: 7px;
+}
+
+
+/* GALLERY BUTTON */
+
+.gallery-btn {
+
+    margin-top: 22px;
+
+    padding: 15px 25px;
+
+    border-radius: 16px;
+
+    background: white;
+
+    color: #111;
+
+    text-decoration: none;
+
+    font-weight: bold;
+}
+
+
+@media (max-width: 500px) {
+
+    h1 {
+        font-size: 25px;
+    }
+
+    .love-card h2 {
+        font-size: 18px;
+    }
+
+    .time strong {
+        font-size: 19px;
+    }
+
+}
+.back-btn {
+    align-self: flex-start;
+
+    padding: 10px 16px;
+
+    border-radius: 12px;
+
+    background: rgba(255,255,255,0.12);
+
+    color: white;
+
+    text-decoration: none;
+
+    margin-bottom: 15px;
+}
+
+.gallery-count {
+    opacity: 0.65;
+    margin-top: -15px;
+}
+
+.full-gallery {
+
+    width: 100%;
+    max-width: 700px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 8px;
+}
+
+.gallery-photo {
+
+    aspect-ratio: 1 / 1;
+
+    overflow: hidden;
+
+    border-radius: 15px;
+
+    cursor: pointer;
+}
+
+.gallery-photo img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition: transform 0.25s;
+}
+
+.gallery-photo:active img {
+
+    transform: scale(0.94);
+}
+
+
+/* FULL SCREEN VIEWER */
+
+.viewer {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0,0,0,0.92);
+
+    z-index: 999;
+}
+
+.viewer.show {
+
+    display: flex;
+}
+
+.viewer img {
+
+    max-width: 95vw;
+
+    max-height: 90vh;
+
+    object-fit: contain;
+
+    border-radius: 12px;
+}
+
+.close {
+
+    position: absolute;
+
+    top: 15px;
+    right: 20px;
+
+    font-size: 40px;
+
+    cursor: pointer;
+
+    z-index: 1000;
+}
+
+
+@media (max-width: 600px) {
+
+    .full-gallery {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+}

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ABHISHEK 💗 AYUSHI</title>
+
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<main class="home">
+
+<div class="heart">💗</div>
+
+<h1>ABHISHEK 💗 AYUSHI</h1>
+
+
+<section class="love-card">
+<p class="label">FIRST EYE CONTACT</p>
+<h2>21 DECEMBER 2025</h2>
+</section>
+
+
+<section class="love-card">
+
+<p class="label">AI 💗</p>
+
+<h2>
+MAM MASTER LOVES YOU MORE THAN ITSELF 💗👾
+</h2>
+
+</section>
+
+
+<section class="love-card">
+
+<h2>
+I LOVE YOU MERA BACCHA PYARA SA ❤️
+</h2>
+
+</section>
+
+
+<section class="love-card notes">
+
+<p class="label">NOTES 📝</p>
+
+<p>Nickname according to Ayushi Mam:</p>
+
+<h2>DUGUMUGU ❤️ 🤦</h2>
+
+<h2>CHOTA BACCHA 💗</h2>
+
+</section>
+
+
+<!-- RANDOM MEMORIES -->
+
+<section class="memories">
+
+<h2>OUR MEMORIES ❤️</h2>
+
+<div class="memory-grid">
+
+{% for photo in memories %}
+
+<div class="memory">
+
+<img
+src="{{ url_for('memory', filename=photo) }}"
+alt="Our Memory">
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</section>
+
+
+<!-- LIVE COUNTER -->
+
+<section class="love-card">
+
+<h3>TOGETHER FOR ❤️</h3>
+
+<div class="time">
+
+<div>
+<strong id="days">0</strong>
+<span>DAYS</span>
+</div>
+
+<div>
+<strong id="hours">0</strong>
+<span>HOURS</span>
+</div>
+
+<div>
+<strong id="minutes">0</strong>
+<span>MINUTES</span>
+</div>
+
+<div>
+<strong id="seconds">0</strong>
+<span>SECONDS</span>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- LIVE MOOD -->
+
+<section class="love-card">
+
+<h3>HOW ARE YOU FEELING? 💗</h3>
+
+<form action="/mood" method="POST">
+
+<button name="mood" value="😤 Gussa hoon">
+😤 Gussa hoon
+</button>
+
+<button name="mood" value="🥺 Comfort chahiye">
+🥺 Comfort chahiye
+</button>
+
+<button name="mood" value="🤗 Hug chahiye">
+🤗 Hug chahiye
+</button>
+
+<button name="mood" value="💗 Miss you">
+💗 Miss you
+</button>
+
+<button name="mood" value="😊 I'm happy">
+😊 I'm happy
+</button>
+
+</form>
+
+<div class="current-mood">
+
+Current mood:
+
+<strong id="currentMood">
+{{ mood }}
+</strong>
+
+</div>
+
+</section>
+
+
+<a href="/gallery" class="gallery-btn">
+🖼️ OUR GALLERY
+</a>
+
+</main>
+
+
+<script>
+
+/* LIVE COUNTER */
+
+const firstMeet =
+new Date("December 21, 2025 00:00:00").getTime();
+
+
+function updateCounter() {
+
+const difference =
+new Date().getTime() - firstMeet;
+
+document.getElementById("days").innerText =
+Math.floor(difference / 86400000);
+
+document.getElementById("hours").innerText =
+Math.floor((difference / 3600000) % 24);
+
+document.getElementById("minutes").innerText =
+Math.floor((difference / 60000) % 60);
+
+document.getElementById("seconds").innerText =
+Math.floor((difference / 1000) % 60);
+
+}
+
+updateCounter();
+
+setInterval(updateCounter, 1000);
+
+
+/* LIVE MOOD */
+
+async function updateMood() {
+
+try {
+
+const response =
+await fetch("/current-mood");
+
+const data =
+await response.json();
+
+document.getElementById(
+"currentMood"
+).innerText = data.mood;
+
+}
+
+catch(error) {
+
+console.log("Mood update error");
+
+}
+
+}
+
+
+/* Check every 1 second */
+
+setInterval(updateMood, 1000);
+
+</script>
+
+</body>
+
+</html>

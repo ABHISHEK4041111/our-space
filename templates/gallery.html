@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Our Gallery ❤️</title>
+
+<link rel="stylesheet"
+href="/static/style.css">
+
+</head>
+
+
+<body>
+
+<main class="home">
+
+    <a href="/" class="back-btn">
+        ← HOME
+    </a>
+
+    <h1>OUR GALLERY ❤️</h1>
+
+    <p class="gallery-count">
+        {{ photos|length }} memories
+    </p>
+
+
+    <section class="full-gallery">
+
+        {% for photo in photos %}
+
+        <div
+            class="gallery-photo"
+            onclick="openPhoto(this)"
+        >
+
+            <img
+                src="{{ url_for('memory', filename=photo) }}"
+                alt="Our Memory"
+            >
+
+        </div>
+
+        {% endfor %}
+
+    </section>
+
+</main>
+
+
+<!-- FULL SCREEN PHOTO -->
+
+<div
+    id="viewer"
+    class="viewer"
+    onclick="closePhoto()"
+>
+
+    <span class="close">
+        ×
+    </span>
+
+    <img
+        id="viewerImage"
+        src=""
+        alt="Full Memory"
+    >
+
+</div>
+
+
+<script>
+
+function openPhoto(element) {
+
+    const image =
+        element.querySelector("img");
+
+    document.getElementById(
+        "viewerImage"
+    ).src = image.src;
+
+    document.getElementById(
+        "viewer"
+    ).classList.add("show");
+}
+
+
+function closePhoto() {
+
+    document.getElementById(
+        "viewer"
+    ).classList.remove("show");
+
+}
+
+</script>
+
+</body>
+
+</html>
